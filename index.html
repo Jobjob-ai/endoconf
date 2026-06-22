@@ -229,6 +229,8 @@ main{padding:22px 0 70px}
 .tl-conf{color:var(--warn);font-weight:700;font-size:12.5px;margin-top:7px;display:flex;gap:6px;
   align-items:flex-start;line-height:1.4}
 .tl-conf svg{flex:none;margin-top:1px}
+.tl-alt{color:var(--teal-d);font-weight:600;font-size:12px;margin-top:6px;display:flex;gap:6px;align-items:flex-start;line-height:1.4}
+.tl-alt svg{flex:none;margin-top:2px;opacity:.85}
 .rm{color:var(--muted);font-size:13px;font-weight:700;flex:none;align-self:center;border:1.5px solid var(--line);
   border-radius:9px;padding:8px 12px;min-height:40px;transition:.15s var(--ease);white-space:nowrap}
 .rm:hover{color:var(--warn);border-color:var(--warn-line);background:var(--warn-l)}
@@ -392,7 +394,7 @@ const store={
   get filt(){return localStorage.getItem('ies_filt')==='1'},
   set filt(v){localStorage.setItem('ies_filt',v?'1':'0')}
 };
-let state={view:'program',day:'2026-07-15',filter:store.filt,topics:store.topics,sel:new Set(store.sel),talks:new Set(store.talks)};
+let state={view:'program',day:'2026-07-15',filter:store.filt,topics:store.topics,sel:new Set(store.sel),talks:new Set(store.talks),autoAlt:{}};
 const byId=id=>SESSIONS.find(s=>s.id===id);
 const toMin=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
 const overlap=(a,b)=>a.day===b.day && toMin(a.start)<toMin(b.end) && toMin(b.start)<toMin(a.end);
@@ -563,6 +565,7 @@ function renderMine(){
         <h3 dir="auto">${esc(it.title)}</h3>
         <div class="m"><span class="hpip" style="background:${HALLCOLOR[it.hall]||'#555'};color:#fff">${HALLHE(it.hall)}</span>${meta}</div>
         ${conf.length?`<div class="tl-conf">${IC.warn} <span>חופף עם: ${conf.map(c=>esc(c.title)).join(' · ')}</span></div>`:''}
+        ${(it.kind==='s'&&state.autoAlt&&state.autoAlt[it.key])?`<div class="tl-alt">${IC.check} <span>נבחר עבורך כהתאמה הטובה ביותר לשעה זו${state.autoAlt[it.key]>1?` · יש עוד ${state.autoAlt[it.key]} מושבים מקבילים תואמים בתוכנייה`:` · יש עוד מושב מקביל תואם אחד בתוכנייה`}</span></div>`:''}
       </div>
       <button class="rm no-print" onclick="removeItem('${it.key}')">הסר ✕</button>`;
     card.appendChild(row);
@@ -571,20 +574,30 @@ function renderMine(){
 }
 
 /* ---------- auto build ---------- */
+function topicScore(s){return (state.topics.length&&s.topics)?s.topics.filter(t=>state.topics.includes(t)).length:0;}
 function autoBuild(){
   if(!state.topics.length){toast('בחר/י קודם תחומי עניין');document.getElementById('onb').scrollIntoView({behavior:'smooth'});return;}
   const sel=new Set();
+  const chosen=[];
+  const clashes=it=>chosen.some(o=>o.day===it.day&&toMin(it.start)<toMin(o.end)&&toMin(o.start)<toMin(it.end));
+  const place=s=>{sel.add(s.id);chosen.push({day:s.day,start:s.start,end:s.end});};
+  const alt={};
   DAYS.forEach(day=>{
+    SESSIONS.filter(s=>s.day===day&&s.general).forEach(s=>{if(!clashes(s))place(s);});
     const slots={};
-    SESSIONS.filter(s=>s.day===day&&s.type!=='break').forEach(s=>{(slots[s.start]=slots[s.start]||[]).push(s)});
-    Object.values(slots).forEach(group=>{
-      if(group.length===1){if(group[0].general)sel.add(group[0].id);return;}
-      const m=group.filter(matches);
-      m.forEach(x=>sel.add(x.id));
+    SESSIONS.filter(s=>s.day===day&&s.type!=='break'&&!s.general).forEach(s=>{(slots[s.start]=slots[s.start]||[]).push(s)});
+    Object.keys(slots).sort((a,b)=>toMin(a)-toMin(b)).forEach(start=>{
+      const group=slots[start];
+      const cands=group.map((s,i)=>({s,i,sc:topicScore(s)})).filter(c=>c.sc>0).sort((a,b)=>b.sc-a.sc||a.i-b.i);
+      if(!cands.length) return;
+      const pick=cands.find(c=>!clashes(c.s));
+      if(!pick) return;
+      place(pick.s);
+      const others=cands.length-1;
+      if(others>0) alt[pick.s.id]=others;
     });
-    SESSIONS.filter(s=>s.day===day&&s.general).forEach(s=>sel.add(s.id));
   });
-  state.sel=sel;state.talks.clear();persist();updateCount();
+  state.sel=sel;state.talks.clear();state.autoAlt=alt;persist();updateCount();
   setView('mine');toast('נבנה לו"ז מומלץ — בדוק/י וערוך/י לפי הצורך');
 }
 function clearAll(){if(confirm('לנקות את כל הבחירות?')){state.sel.clear();state.talks.clear();persist();updateCount();render();}}
