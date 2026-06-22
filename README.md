@@ -20,3 +20,6 @@
 אתר סטטי — Vercel מזהה ומגיש אוטומטית. כל `git push` ל-branch הראשי מפעיל פריסה אוטומטית.
 
 קרדיט: ד"ר רועי שליט · מדור חדשנות ו-AI, האגודה הישראלית לאנדוקרינולוגיה.
+
+
+[![Live](https://img.shields.io/badge/Live-endoconf.vercel.app-0c6f68)](https://endoconf.vercel.app/)
