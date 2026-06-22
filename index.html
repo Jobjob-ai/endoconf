@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הכנס המדעי ה-54 · האגודה הישראלית לאנדוקרינולוגיה · בונה הלו"ז האישי</title>
+<meta name="description" content="כלי ניווט ובניית לו&quot;ז אישי לכנס המדעי ה-54 של האגודה הישראלית לאנדוקרינולוגיה, 15–16 ביולי 2026, מלון דיוויד אינטרקונטיננטל תל אביב.">
+<meta name="theme-color" content="#0c5b57">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* paper-warm neutrals tinted toward the brand hue, deep slate ink (never pure black/white) */
+  --bg:#f4f6f5; --bg-2:#eef1f0; --surface:#fdfdfc; --surface-2:#f7f9f8;
+  --ink:#152826; --ink-2:#334744; --muted:#637875; --line:#dfe6e4; --line-2:#eef2f1;
+  /* one confident accent: a considered deep clinical teal-green */
+  --teal:#0c6f68; --teal-d:#085450; --teal-dd:#063c39; --teal-l:#e2f0ee; --teal-l2:#f0f7f5; --teal-ring:#9fd1ca;
+  /* warm secondary used only for the personal-agenda / star affordance */
+  --amber:#b06a1f; --amber-d:#8a5114; --amber-l:#fbeedd; --amber-ring:#e8c79a;
+  --warn:#b23b2e; --warn-l:#fbeae7; --warn-line:#eec4bd; --ok:#1d7a48;
+  --shadow-sm:0 1px 2px rgba(18,40,38,.06);
+  --shadow:0 1px 2px rgba(18,40,38,.05),0 4px 16px rgba(18,40,38,.06);
+  --shadow-lg:0 10px 34px rgba(18,40,38,.12);
+  --radius:14px; --radius-sm:10px; --radius-lg:20px; --maxw:1140px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  /* functional hall colour system: each hall gets ink + tinted background */
+  --hallA:#0c6f68;--hallA-bg:#e1efed;
+  --hallB:#5b46a3;--hallB-bg:#ece9f6;
+  --hallD:#a8542a;--hallD-bg:#f6e9e1;
+  --hallH:#2c7a3c;--hallH-bg:#e5f1e7;
+  --hallI:#1f6488;--hallI-bg:#e2eef4;
+  --hallJ:#9c3565;--hallJ-bg:#f6e6ee;
+  --hall5:#6f6121;--hall5-bg:#f1efe1;
+  --hallF:#5f6e6a;--hallF-bg:#eaeeec;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Heebo","Segoe UI",Arial,system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+a{color:var(--teal-d);text-underline-offset:2px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.015em;line-height:1.2}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2.5px solid var(--teal);outline-offset:2px;border-radius:6px}
+::selection{background:var(--teal-ring)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--radius-sm);
+  padding:11px 18px;font-weight:700;font-size:15px;min-height:44px;line-height:1;
+  transition:background .18s var(--ease),border-color .18s var(--ease),transform .12s var(--ease),box-shadow .18s var(--ease);
+  border:1.5px solid transparent}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--teal-d)}
+.btn-ghost{background:var(--surface);color:var(--teal-d);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--teal);background:var(--teal-l2)}
+.btn-accent{background:var(--amber);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-accent:hover{background:var(--amber-d)}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* ===================== HERO ===================== */
+header.hero{
+  position:relative;overflow:hidden;color:#eafaf7;
+  background:
+    radial-gradient(120% 140% at 88% -10%, rgba(72,196,182,.32), transparent 52%),
+    linear-gradient(155deg,#063c39 0%,#0a5651 48%,#0c6f68 100%);
+  padding:30px 0 30px;
+}
+header.hero:before{ /* subtle topographic-style guide lines, clinical/precise feel */
+  content:"";position:absolute;inset:0;opacity:.18;pointer-events:none;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:64px 100%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%,#000 60%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 40%,#000 60%,transparent);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero .ey{font-size:12.5px;letter-spacing:.16em;font-weight:800;color:#a7e6dc;text-transform:uppercase;display:flex;align-items:center;gap:9px}
+.hero .ey:before{content:"";width:26px;height:2px;background:#5fc8ba;border-radius:2px;display:inline-block}
+.hero h1{font-size:clamp(23px,4.2vw,36px);font-weight:900;margin:11px 0 4px;letter-spacing:-.025em;color:#fff;max-width:20ch}
+.hero .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.hero .pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);
+  padding:7px 13px;border-radius:11px;font-size:13.5px;font-weight:700;color:#eafaf7;
+  display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(2px)}
+.hero .pill svg{flex:none;opacity:.92}
+.hero .pill a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.45)}
+.hero .pill a:hover{text-decoration-color:#fff}
+
+/* ===================== CARD / ONBOARDING ===================== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.onb{margin:-22px auto 0;position:relative;z-index:3;padding:24px 24px 22px;border-radius:var(--radius-lg)}
+.onb .step-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.04em;
+  color:var(--teal-d);background:var(--teal-l);padding:5px 11px;border-radius:20px;margin-bottom:11px}
+.onb .step-badge .n{width:18px;height:18px;border-radius:50%;background:var(--teal);color:#fff;display:inline-grid;place-items:center;font-size:11px}
+.onb h2{font-size:clamp(19px,2.6vw,23px);color:var(--ink);font-weight:900;letter-spacing:-.02em}
+.onb p.sub{color:var(--ink-2);margin:7px 0 20px;font-size:15px;max-width:64ch}
+.field label{display:block;font-weight:700;font-size:13.5px;color:var(--ink-2);margin-bottom:8px}
+.field input{width:100%;max-width:360px;padding:12px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  font-size:15px;font-family:inherit;background:var(--surface-2);color:var(--ink);transition:.15s var(--ease)}
+.field input::placeholder{color:#9aada9}
+.field input:focus{outline:none;border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px var(--teal-l)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:9px}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:22px;padding:9px 15px;
+  font-size:14px;font-weight:600;color:var(--ink);min-height:44px;
+  display:inline-flex;align-items:center;gap:8px;transition:.16s var(--ease)}
+.chip:hover{border-color:var(--teal);background:var(--teal-l2);color:var(--teal-d)}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;box-shadow:var(--shadow-sm)}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:var(--teal-ring);transition:.16s var(--ease)}
+.chip:hover .dot{background:var(--teal)}
+.chip[aria-pressed="true"] .dot{background:#fff}
+.onb-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:22px;align-items:center}
+.onb-actions .hint{color:var(--muted);font-size:13px;display:inline-flex;align-items:center;gap:6px}
+
+/* ===================== TOOLBAR ===================== */
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(244,246,245,.86);
+  -webkit-backdrop-filter:saturate(160%) blur(12px);backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--line);padding:11px 0;margin-top:26px}
+.toolbar .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:3px}
+.seg button{padding:9px 15px;border-radius:9px;font-weight:700;font-size:14px;color:var(--muted);min-height:40px;
+  display:inline-flex;align-items:center;gap:7px;transition:.18s var(--ease);white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--teal-d);box-shadow:var(--shadow-sm)}
+.seg button .ico{width:16px;height:16px}
+.tog{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--ink-2);user-select:none;
+  cursor:pointer;padding:8px 12px;border-radius:11px;min-height:44px;transition:.15s var(--ease)}
+.tog:hover{background:var(--bg-2)}
+.switch{position:relative;width:42px;height:24px;background:#c4d0cd;border-radius:20px;transition:.22s var(--ease);flex:none}
+.switch.on{background:var(--teal)}
+.switch:after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;background:#fff;border-radius:50%;
+  transition:right .22s var(--ease);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch.on:after{right:21px}
+.count-badge{background:var(--amber);color:#fff;border-radius:20px;font-size:12px;font-weight:800;
+  padding:1px 7px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+
+/* ===================== PROGRAM ===================== */
+main{padding:22px 0 70px}
+.daytitle{font-size:13px;font-weight:800;color:var(--teal-d);letter-spacing:.02em;margin:4px 0 2px;
+  display:inline-flex;align-items:center;gap:8px}
+.slot{margin:26px 0}
+.slot-time{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.slot-time b{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+  color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:5px 12px;border-radius:9px;
+  box-shadow:var(--shadow-sm)}
+.slot-time .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.slot-time .par-tag{font-size:12px;font-weight:800;color:var(--amber-d);background:var(--amber-l);
+  border:1px solid var(--amber-ring);padding:4px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.slot-time .par-tag:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.grid{display:grid;gap:13px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+
+.sess{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 16px 14px;box-shadow:var(--shadow-sm);position:relative;display:flex;flex-direction:column;
+  transition:border-color .18s var(--ease),box-shadow .18s var(--ease),transform .18s var(--ease)}
+.sess:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.sess.match{border-color:var(--teal-ring);box-shadow:0 0 0 1.5px var(--teal-ring),var(--shadow-sm)}
+.sess.match:hover{box-shadow:0 0 0 1.5px var(--teal),var(--shadow)}
+.sess.selected{border-color:var(--amber-ring);background:linear-gradient(180deg,#fffaf3,var(--surface) 60%);
+  box-shadow:0 0 0 1.5px var(--amber-ring),var(--shadow-sm)}
+.sess.selected:hover{box-shadow:0 0 0 1.5px var(--amber),var(--shadow)}
+.sess.full{grid-column:1/-1}
+.sess.gen{background:linear-gradient(180deg,var(--teal-l2),var(--surface) 70%);border-color:var(--teal-ring)}
+.sess.brk{background:var(--bg-2);border-style:dashed;border-color:var(--line);box-shadow:none;
+  align-items:center;text-align:center;padding:13px;flex-direction:row;justify-content:center;gap:9px}
+.sess-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.hall{font-size:12.5px;font-weight:800;padding:5px 12px;border-radius:8px;white-space:nowrap;flex:none;
+  display:inline-flex;align-items:center;gap:6px;letter-spacing:-.005em;box-shadow:0 1px 2px rgba(18,40,38,.18)}
+.hall:before{content:"";width:7px;height:7px;border-radius:2px;background:#fff;opacity:.9}
+.tlabel{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.sess h3{font-size:16.5px;font-weight:800;margin:11px 0 0;line-height:1.32;letter-spacing:-.015em;color:var(--ink)}
+.sess .chairs{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+.sess .chairs b{color:var(--ink-2);font-weight:700}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.tb{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:7px;background:var(--teal-l);color:var(--teal-d)}
+.match-flag{font-size:11.5px;font-weight:800;color:var(--teal-d);background:var(--teal-l);
+  border-radius:7px;padding:4px 10px;display:inline-flex;align-items:center;gap:5px;align-self:flex-start;margin-top:11px}
+.match-flag svg{flex:none}
+.spons{font-size:12px;color:var(--amber-d);font-weight:700;margin-top:9px;display:inline-flex;align-items:center;gap:5px}
+.sess-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:13px;
+  gap:10px;border-top:1px solid var(--line-2)}
+.sess-foot:has(.linkbtn){margin-top:13px}
+.linkbtn{font-size:13px;font-weight:700;color:var(--teal-d);display:inline-flex;align-items:center;gap:6px;
+  padding:8px 4px;min-height:40px;border-radius:8px;transition:.15s var(--ease)}
+.linkbtn:hover{color:var(--teal-dd)}
+.star{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:800;color:var(--amber-d);
+  border:1.5px solid var(--amber-ring);background:var(--surface);border-radius:var(--radius-sm);
+  padding:9px 14px;min-height:44px;transition:.16s var(--ease);white-space:nowrap}
+.star:hover{background:var(--amber-l);border-color:var(--amber)}
+.star.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+.star.on:hover{background:var(--amber-d)}
+.talks{margin-top:13px;border-top:1px dashed var(--line);padding-top:11px;display:none}
+.talks.open{display:block;animation:fade .25s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.talk{display:flex;gap:11px;padding:7px 0;font-size:13.5px;border-bottom:1px solid var(--line-2)}
+.talk:last-child{border-bottom:none}
+.talk .tt{font-variant-numeric:tabular-nums;color:var(--amber-d);font-weight:700;white-space:nowrap;flex:none;
+  font-size:12.5px;padding-top:1px}
+.talk .td{line-height:1.4}
+.talk .td b{font-weight:600;color:var(--ink)}
+.talk .sp{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+/* ===================== MY SCHEDULE ===================== */
+.empty{text-align:center;padding:56px 20px;color:var(--muted);max-width:46ch;margin:0 auto}
+.empty .big{width:64px;height:64px;margin:0 auto 16px;border-radius:18px;background:var(--teal-l);
+  display:grid;place-items:center;color:var(--teal)}
+.empty b{display:block;color:var(--ink);font-size:17px;font-weight:800;margin-bottom:6px}
+.empty p{margin:0;font-size:14.5px;line-height:1.5}
+.sch-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:flex-end;margin-bottom:8px}
+.sch-actions{display:flex;flex-wrap:wrap;gap:10px}
+.warnbar{background:var(--warn-l);color:var(--warn);border:1px solid var(--warn-line);border-radius:12px;
+  padding:13px 15px;font-size:13.5px;font-weight:600;margin:14px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.warnbar svg{flex:none;margin-top:1px}
+.printcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:22px 24px;margin-top:16px}
+.printcard h2{font-size:19px;font-weight:900;letter-spacing:-.02em}
+.tl-item{display:flex;gap:15px;padding:15px 0;border-bottom:1px solid var(--line-2);position:relative}
+.tl-item:last-child{border-bottom:none;padding-bottom:2px}
+.tl-time{flex:none;width:62px;text-align:start;font-variant-numeric:tabular-nums;padding-top:1px}
+.tl-time b{display:block;font-size:15.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.tl-time span{font-size:12px;color:var(--muted)}
+.tl-rail{flex:none;width:2px;background:var(--line);border-radius:2px;position:relative}
+.tl-rail:before{content:"";position:absolute;top:3px;right:-3px;width:8px;height:8px;border-radius:50%;
+  background:var(--teal);box-shadow:0 0 0 3px var(--teal-l)}
+.tl-item.has-conf .tl-rail:before{background:var(--warn);box-shadow:0 0 0 3px var(--warn-l)}
+.tl-body{flex:1;min-width:0}
+.tl-body h3{font-size:16px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.tl-body .m{font-size:13px;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.tl-body .m .hpip{font-weight:700;padding:1px 8px;border-radius:6px;font-size:11.5px}
+.tl-conf{color:var(--warn);font-weight:700;font-size:12.5px;margin-top:7px;display:flex;gap:6px;
+  align-items:flex-start;line-height:1.4}
+.tl-conf svg{flex:none;margin-top:1px}
+.rm{color:var(--muted);font-size:13px;font-weight:700;flex:none;align-self:center;border:1.5px solid var(--line);
+  border-radius:9px;padding:8px 12px;min-height:40px;transition:.15s var(--ease);white-space:nowrap}
+.rm:hover{color:var(--warn);border-color:var(--warn-line);background:var(--warn-l)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--muted);font-size:13px;
+  text-align:center;line-height:1.6}
+footer a{font-weight:600}
+footer .credit{display:inline-block;font-weight:800;color:var(--teal-d);background:var(--teal-l);border:1px solid var(--teal-ring);padding:8px 16px;border-radius:22px;margin-bottom:12px;font-size:13.5px}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:13px 22px;border-radius:14px;font-weight:700;font-size:14px;
+  opacity:0;transition:opacity .28s var(--ease),transform .35s var(--ease);z-index:50;
+  box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:560px){
+  .wrap{padding:0 14px}
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:22px}
+  .onb{margin-top:-18px;padding:20px 18px}
+  .toolbar .row{gap:9px}
+  .seg{width:100%;justify-content:center}
+  .seg button{flex:1;justify-content:center}
+  #dayWrap button{flex:1}
+  .sch-actions .btn{flex:1}
+}
+
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#000;font-size:12pt}
+  header.hero,.toolbar,.onb,footer,.sch-actions,.star,.linkbtn,.rm,#viewToggleWrap,.no-print,.tl-rail{display:none!important}
+  main{padding:0}
+  .printcard,.card{box-shadow:none;border:1px solid #ccc}
+  .printcard{padding:0;border:none}
+  .printcard h2{font-size:18pt}
+  .tl-item{break-inside:avoid;border-bottom:1px solid #ddd;padding:9px 0;gap:14px}
+  .tl-time b{font-size:13pt}
+  .tl-body h3{font-size:13pt}
+  .warnbar{border:1px solid #999;color:#000;background:#f5f5f5}
+  .tl-conf{color:#000}
+}
+.searchbar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:11px 14px;box-shadow:var(--shadow-sm);min-height:46px}
+.searchbar:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-l)}
+.searchbar svg{color:var(--muted);flex:none}
+.searchbar input{border:none;outline:none;background:none;font-family:inherit;font-size:15.5px;width:100%;color:var(--ink)}
+.searchbar input::placeholder{color:#9aada9}
+.talk{align-items:flex-start}
+.talk .td{flex:1;min-width:0}
+.talk.picked{background:var(--amber-l);border-radius:8px;padding-inline:6px}
+.talkadd{flex:none;width:30px;height:30px;border-radius:8px;border:1.5px solid var(--amber);color:var(--amber);background:var(--surface);font-weight:800;font-size:18px;line-height:1;display:inline-flex;align-items:center;justify-content:center;margin-top:1px;transition:.13s var(--ease)}
+.talkadd:hover{background:var(--amber-l)}
+.talkadd.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+.kindpip{background:var(--amber-l);color:var(--amber-d);font-weight:800;font-size:11px;padding:1px 7px;border-radius:20px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="ey">Israel Endocrine Society · כנס האביב 2026</div>
+    <h1>הכנס המדעי ה-54 של האגודה הישראלית לאנדוקרינולוגיה</h1>
+    <div class="meta">
+      <span class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>15–16 ביולי 2026</span>
+      <span class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><a href="https://www.ies.org.il/locations/%d7%9e%d7%9c%d7%95%d7%9f-%d7%93%d7%99%d7%95%d7%95%d7%99%d7%93-%d7%90%d7%99%d7%a0%d7%98%d7%a8%d7%a7%d7%95%d7%a0%d7%98%d7%99%d7%a0%d7%a0%d7%98%d7%9c-%d7%aa%d7%9c-%d7%90%d7%91%d7%99%d7%91-2/" target="_blank" rel="noopener">מלון דיוויד אינטרקונטיננטל, תל אביב</a></span>
+      <span class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>44 מושבים · 170+ תקצירים</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="card onb" id="onb">
+    <span class="step-badge"><span class="n">1</span> נתחיל מכאן</span>
+    <h2>בנה/י את הלו"ז האישי שלך לכנס</h2>
+    <p class="sub">בכנס רצים עד 7 מושבים במקביל. בחר/י את תחומי העניין שלך — נדגיש עבורך את המושבים הרלוונטיים, נזהיר מפני חפיפות זמן, ובסוף תוכל/י לייצא לו"ז אישי ליומן או להדפסה.</p>
+    <div class="field" style="margin-bottom:20px">
+      <label for="uname">שם (לא חובה — יופיע בכותרת הלו"ז)</label>
+      <input id="uname" type="text" placeholder="ד״ר ישראל ישראלי" autocomplete="name">
+    </div>
+    <div class="field">
+      <label>תחומי העניין שלי</label>
+      <div class="chips" id="topicChips"></div>
+    </div>
+    <div class="onb-actions">
+      <button class="btn btn-accent" id="autoBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+        בנה לי לו"ז מומלץ אוטומטית
+      </button>
+      <button class="btn btn-ghost" id="browseBtn">עיון בתוכנייה המלאה
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </button>
+      <span class="hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        הבחירות נשמרות אוטומטית במכשיר שלך.
+      </span>
+    </div>
+  </section>
+</div>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap row">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div class="seg" id="viewToggleWrap" role="tablist">
+        <button id="vProgram" role="tab" aria-selected="true"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>תוכנייה</button>
+        <button id="vMine" role="tab" aria-selected="false"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L12 17l-6.2 3.6 1.6-6.7L2.2 8.9l6.9-.6Z"/></svg>הלו"ז שלי <span class="count-badge" id="cnt" style="display:none">0</span></button>
+      </div>
+      <div class="seg" id="dayWrap" role="tablist">
+        <button id="d15" role="tab" aria-selected="true">יום ד׳ · 15.7</button>
+        <button id="d16" role="tab" aria-selected="false">יום ה׳ · 16.7</button>
+      </div>
+    </div>
+    <label class="tog no-print" id="filterTog">
+      <span class="switch" id="filtSw"></span>
+      הצג רק את תחומי העניין שלי
+    </label>
+  </div>
+</div>
+
+<div class="wrap" style="margin-top:14px">
+  <div class="searchbar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="spkSearch" type="search" placeholder="חיפוש הרצאה לפי שם מרצה…" aria-label="חיפוש הרצאה לפי שם מרצה" autocomplete="off">
+  </div>
+</div>
+<main class="wrap" id="main"></main>
+
+<footer class="wrap">
+  <div class="credit">פותח ע"י ד"ר רועי שליט · מדור חדשנות ו‑AI, האגודה הישראלית לאנדוקרינולוגיה</div>
+  כלי בלתי-רשמי לסיוע בניווט בכנס · הנתונים חולצו מחוברת הכנס הרשמית (כנס האביב 2026).<br>
+  לפרטי הרשמה ומידע רשמי יש לפנות ל<a href="https://www.ies.org.il/" target="_blank" rel="noopener">אתר האגודה הישראלית לאנדוקרינולוגיה</a>.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+const HALLCOLOR={'Hall A':'var(--hallA)','Hall B':'var(--hallB)','Hall D':'var(--hallD)','Hall H':'var(--hallH)','Hall I':'var(--hallI)','Hall J':'var(--hallJ)','Hall 5':'var(--hall5)','Foyer':'var(--hallF)'};
+const HALLBG={'Hall A':'var(--hallA-bg)','Hall B':'var(--hallB-bg)','Hall D':'var(--hallD-bg)','Hall H':'var(--hallH-bg)','Hall I':'var(--hallI-bg)','Hall J':'var(--hallJ-bg)','Hall 5':'var(--hall5-bg)','Foyer':'var(--hallF-bg)'};
+const HALLHE=h=>h==='Foyer'?'מבואה':h.replace('Hall','אולם');
+const TYPEHE={plenary:'מליאה',parallel:'מושב מקביל',abstracts:'מצגות מתקצירים',flash:'Flash Talks',satellite:'סימפוזיון לוויין (ארוחה)',opening:'מושב פתיחה',prize:'טקס פרסים','break':'הפסקה'};
+const DAYS=['2026-07-15','2026-07-16'];
+const DAYHE={'2026-07-15':'יום רביעי, 15 ביולי 2026','2026-07-16':'יום חמישי, 16 ביולי 2026'};
+
+const IC={
+  check:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  star:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L12 17l-6.2 3.6 1.6-6.7L2.2 8.9l6.9-.6Z"/></svg>',
+  starFill:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L12 17l-6.2 3.6 1.6-6.7L2.2 8.9l6.9-.6Z"/></svg>',
+  chevDown:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  chevUp:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>',
+  warn:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>',
+  sponsor:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+};
+
+const store={
+  get name(){return localStorage.getItem('ies_name')||''},
+  set name(v){localStorage.setItem('ies_name',v)},
+  get topics(){try{return JSON.parse(localStorage.getItem('ies_topics')||'[]')}catch(e){return[]}},
+  set topics(v){localStorage.setItem('ies_topics',JSON.stringify(v))},
+  get sel(){try{return JSON.parse(localStorage.getItem('ies_sel')||'[]')}catch(e){return[]}},
+  set sel(v){localStorage.setItem('ies_sel',JSON.stringify(v))},
+  get talks(){try{return JSON.parse(localStorage.getItem('ies_talks')||'[]')}catch(e){return[]}},
+  set talks(v){localStorage.setItem('ies_talks',JSON.stringify(v))},
+  get filt(){return localStorage.getItem('ies_filt')==='1'},
+  set filt(v){localStorage.setItem('ies_filt',v?'1':'0')}
+};
+let state={view:'program',day:'2026-07-15',filter:store.filt,topics:store.topics,sel:new Set(store.sel),talks:new Set(store.talks)};
+const byId=id=>SESSIONS.find(s=>s.id===id);
+const toMin=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
+const overlap=(a,b)=>a.day===b.day && toMin(a.start)<toMin(b.end) && toMin(b.start)<toMin(a.end);
+const matches=s=>state.topics.length&&s.topics&&s.topics.some(t=>state.topics.includes(t));
+
+function toast(msg){const t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1900);}
+
+/* ---------- onboarding ---------- */
+function renderChips(){
+  const c=document.getElementById('topicChips');c.innerHTML='';
+  Object.entries(TOPICS).forEach(([k,he])=>{
+    const b=document.createElement('button');b.className='chip';
+    b.setAttribute('aria-pressed',state.topics.includes(k));
+    b.innerHTML='<span class="dot"></span>'+he;
+    b.onclick=()=>{state.topics=state.topics.includes(k)?state.topics.filter(x=>x!==k):[...state.topics,k];store.topics=state.topics;renderChips();render();};
+    c.appendChild(b);
+  });
+}
+document.getElementById('uname').value=store.name;
+document.getElementById('uname').oninput=e=>store.name=e.target.value;
+
+/* ---------- selection ---------- */
+function persist(){store.sel=[...state.sel];store.talks=[...state.talks];}
+function toggleSel(id){
+  if(state.sel.has(id)){state.sel.delete(id);}else{state.sel.add(id);[...state.talks].forEach(k=>{if(k.split('#')[0]===id)state.talks.delete(k);});toast(IC.starFill+' המושב המלא נוסף ללו"ז');}
+  persist();updateCount();render();
+}
+function toggleTalkKey(k){
+  if(state.talks.has(k)){state.talks.delete(k);}else{state.talks.add(k);state.sel.delete(k.split('#')[0]);toast(IC.starFill+' ההרצאה נוספה ללו"ז');}
+  persist();updateCount();render();
+}
+function toggleTalk(sid,idx){toggleTalkKey(sid+'#'+idx);}
+function removeItem(key){key.indexOf('#')>=0?toggleTalkKey(key):toggleSel(key);}
+function updateCount(){
+  const n=state.sel.size+state.talks.size,b=document.getElementById('cnt');
+  b.textContent=n;b.style.display=n?'inline-flex':'none';
+}
+function aItems(){
+  const out=[];
+  state.sel.forEach(id=>{const s=byId(id);if(s)out.push({key:id,kind:'s',s,day:s.day,start:s.start,end:s.end,hall:s.hall,title:s.display,type:s.type,chairs:s.chairs});});
+  state.talks.forEach(k=>{const p=k.split('#'),s=byId(p[0]);if(!s)return;const t=s.talks&&s.talks[+p[1]];if(!t)return;out.push({key:k,kind:'t',s,t,day:s.day,start:t.s,end:t.e,hall:s.hall,title:t.t,type:s.type,sp:t.sp,sub:s.display});});
+  return out;
+}
+function aConf(it,sameDay){return aItems().filter(o=>o.key!==it.key&&(!sameDay||o.day===it.day)&&overlap(it,o));}
+
+/* ---------- program render ---------- */
+function talksHtml(s){return (s.talks||[]).map((t,i)=>{const k=s.id+'#'+i,on=state.talks.has(k);return `<div class="talk${on?' picked':''}"><span class="tt">${esc(t.s)}–${esc(t.e)}</span><span class="td"><b dir="auto">${esc(t.t)}</b>${t.sp?`<span class="sp" dir="auto">${esc(t.sp)}</span>`:''}</span><button class="talkadd${on?' on':''}" aria-pressed="${on}" title="${on?'הסר מהלו\"ז':'הוסף הרצאה ללו\"ז'}" onclick="event.stopPropagation();toggleTalk('${s.id}',${i})">${on?'✓':'+'}</button></div>`}).join('');}
+function hallChip(s){return `<span class="hall" style="background:${HALLCOLOR[s.hall]||'#555'};color:#fff">${HALLHE(s.hall)}</span>`;}
+function toggleTalks(id,btn){const e=document.getElementById('tk_'+id);if(!e)return;const open=e.classList.toggle('open');const n=((byId(id)||{}).talks||[]).length;btn.textContent=open?'הסתר הרצאות ▴':('בחר/הצג '+n+' הרצאות ▾');}
+function sessionCard(s){
+  const sel=state.sel.has(s.id),match=matches(s);
+  const el=document.createElement('div');
+  el.className='sess'+(match?' match':'')+(sel?' selected':'');
+  const talks=talksHtml(s);
+  el.innerHTML=`
+    <div class="sess-top">
+      <span class="tlabel">${TYPEHE[s.type]||''}</span>
+      ${hallChip(s)}
+    </div>
+    <h3 dir="auto">${esc(s.display)}</h3>
+    ${match?`<div class="match-flag">${IC.check} מתאים לתחומי העניין שלך</div>`:''}
+    ${s.chairs?`<div class="chairs"><b>יו"ר:</b> <span dir="auto">${esc(s.chairs)}</span></div>`:''}
+    ${s.sponsor?`<div class="spons">${IC.sponsor} בחסות: ${esc(s.sponsor)}</div>`:''}
+    ${s.topics&&s.topics.length?`<div class="badges">${s.topics.map(t=>`<span class="tb">${esc(TOPICS[t]||t)}</span>`).join('')}</div>`:''}
+    ${talks?`<div class="talks" id="tk_${s.id}">${talks}</div>`:''}
+    <div class="sess-foot">
+      ${talks?`<button class="linkbtn" onclick="toggleTalks('${s.id}',this)">בחר/הצג ${s.talks.length} הרצאות ▾</button>`:'<span></span>'}
+      <button class="star ${sel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${sel}">${sel?IC.starFill+' נבחר':IC.star+' הוסף ללו"ז'}</button>
+    </div>`;
+  return el;
+}
+function bannerCard(s){
+  const sel=state.sel.has(s.id);
+  const el=document.createElement('div');
+  el.className='sess full '+(s.type==='break'?'brk':'gen')+(sel?' selected':'');
+  if(s.type==='break'){
+    el.innerHTML=`<span style="font-weight:700;color:var(--muted)">${esc(s.display)}</span>${hallChip(s)}`;
+    return el;
+  }
+  const talks=talksHtml(s);
+  el.innerHTML=`
+    <div class="sess-top">
+      <span class="tlabel">${TYPEHE[s.type]||''} · לכל המשתתפים</span>
+      ${hallChip(s)}
+    </div>
+    <h3 dir="auto">${esc(s.display)}</h3>
+    ${s.chairs?`<div class="chairs"><b>יו"ר:</b> <span dir="auto">${esc(s.chairs)}</span></div>`:''}
+    ${talks?`<div class="talks open" style="display:block">${talks}</div>`:''}
+    <div class="sess-foot">
+      <span></span>
+      <button class="star ${sel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${sel}">${sel?IC.starFill+' נבחר':IC.star+' הוסף ללו"ז'}</button>
+    </div>`;
+  return el;
+}
+function renderProgram(){
+  const main=document.getElementById('main');main.innerHTML='';
+  const dt=document.createElement('div');dt.className='daytitle';dt.textContent=DAYHE[state.day];main.appendChild(dt);
+  let list=SESSIONS.filter(s=>s.day===state.day);
+  const slots={};
+  list.forEach(s=>{(slots[s.start]=slots[s.start]||[]).push(s)});
+  const times=Object.keys(slots).sort((a,b)=>toMin(a)-toMin(b));
+  let shown=0;
+  times.forEach(tm=>{
+    let group=slots[tm];
+    const isParallel=group.filter(s=>s.type!=='break').length>1;
+    let vis=group;
+    if(state.filter && isParallel){
+      const f=group.filter(s=>matches(s)||s.general);
+      if(f.filter(s=>!s.general).length>0) vis=f;
+    }
+    if(!vis.length)return;
+    shown++;
+    const slot=document.createElement('div');slot.className='slot';
+    const end=group[0].end;
+    slot.innerHTML=`<div class="slot-time"><b>${tm}–${end}</b><div class="ln"></div>${isParallel?`<span class="par-tag">${group.filter(s=>s.type!=='break').length} מושבים במקביל — בחר/י אחד</span>`:''}</div>`;
+    const grid=document.createElement('div');grid.className='grid';
+    vis.forEach(s=>{
+      if(s.general||s.type==='break') grid.appendChild(bannerCard(s));
+      else grid.appendChild(sessionCard(s));
+    });
+    slot.appendChild(grid);main.appendChild(slot);
+  });
+  if(!shown){main.innerHTML+=`<div class="empty"><div class="big">${IC.warn}</div><b>אין מושבים להצגה בסינון הנוכחי.</b><p>כבה/י את מסנן תחומי העניין כדי לראות את כל המושבים של היום.</p></div>`;}
+}
+
+/* ---------- my schedule ---------- */
+function renderMine(){
+  const main=document.getElementById('main');main.innerHTML='';
+  const all=aItems();
+  const items=all.filter(it=>it.day===state.day).sort((a,b)=>toMin(a.start)-toMin(b.start));
+  const total=all.length;
+  const head=document.createElement('div');head.className='sch-head';
+  head.innerHTML=`<div><div class="daytitle">${DAYHE[state.day]}</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${total} פריטים בלו"ז (מושבים + הרצאות)${store.name?` · הלו"ז של ${esc(store.name)}`:''}</div></div>
+    <div class="sch-actions no-print">
+      <button class="btn btn-primary" onclick="downloadICS()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg> הורד ליומן (ICS)</button>
+      <button class="btn btn-accent" onclick="downloadImage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> שמור כתמונה לנייד</button>
+      <button class="btn btn-ghost" onclick="window.print()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> הדפסה / PDF</button>
+      ${total?`<button class="btn btn-ghost" onclick="clearAll()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> נקה הכל</button>`:''}
+    </div>`;
+  main.appendChild(head);
+  if(!items.length){
+    main.innerHTML+=`<div class="empty"><div class="big">${IC.starFill}</div><b>עדיין לא בחרת פריטים ליום זה.</b><p>בתוכנייה אפשר להוסיף מושב שלם (☆), או לפתוח מושב ולבחור הרצאות בודדות (+) כדי לדלג בין אולמות.</p></div>`;
+    return;
+  }
+  let confPairs=[];
+  for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++)if(overlap(items[i],items[j]))confPairs.push(1);
+  if(confPairs.length){
+    const w=document.createElement('div');w.className='warnbar';
+    w.innerHTML=`${IC.warn} <div>שים/י לב: יש ${confPairs.length} חפיפות זמן בלו"ז ליום זה. פריטים חופפים מסומנים למטה — בחר/י רק אחד מכל זוג.</div>`;
+    main.appendChild(w);
+  }
+  const card=document.createElement('div');card.className='printcard';
+  const ttl=document.createElement('h2');
+  ttl.textContent=store.name?('הלו"ז של '+store.name):'הלו"ז שלי · הכנס האנדוקריני ה-54';
+  card.appendChild(ttl);
+  const dd=document.createElement('div');dd.style.cssText='color:var(--muted);font-size:13px;margin:3px 0 14px';
+  dd.textContent=DAYHE[state.day]+' · מלון דיוויד אינטרקונטיננטל, תל אביב';card.appendChild(dd);
+  items.forEach(it=>{
+    const conf=aConf(it,true);
+    const isT=it.kind==='t';
+    const meta=isT
+      ?`<span class="kindpip">הרצאה</span><span>מתוך: ${esc(it.sub)}</span>${it.sp?`<span>· ${esc(it.sp.split('|')[0].trim())}</span>`:''}`
+      :`<span>${TYPEHE[it.type]||''}</span>${it.chairs?`<span>· יו"ר: ${esc(it.chairs)}</span>`:''}`;
+    const row=document.createElement('div');row.className='tl-item'+(conf.length?' has-conf':'');
+    row.innerHTML=`<div class="tl-time"><b>${it.start}</b><span>${it.end}</span></div>
+      <div class="tl-rail"></div>
+      <div class="tl-body">
+        <h3 dir="auto">${esc(it.title)}</h3>
+        <div class="m"><span class="hpip" style="background:${HALLCOLOR[it.hall]||'#555'};color:#fff">${HALLHE(it.hall)}</span>${meta}</div>
+        ${conf.length?`<div class="tl-conf">${IC.warn} <span>חופף עם: ${conf.map(c=>esc(c.title)).join(' · ')}</span></div>`:''}
+      </div>
+      <button class="rm no-print" onclick="removeItem('${it.key}')">הסר ✕</button>`;
+    card.appendChild(row);
+  });
+  main.appendChild(card);
+}
+
+/* ---------- auto build ---------- */
+function autoBuild(){
+  if(!state.topics.length){toast('בחר/י קודם תחומי עניין');document.getElementById('onb').scrollIntoView({behavior:'smooth'});return;}
+  const sel=new Set();
+  DAYS.forEach(day=>{
+    const slots={};
+    SESSIONS.filter(s=>s.day===day&&s.type!=='break').forEach(s=>{(slots[s.start]=slots[s.start]||[]).push(s)});
+    Object.values(slots).forEach(group=>{
+      if(group.length===1){if(group[0].general)sel.add(group[0].id);return;}
+      const m=group.filter(matches);
+      m.forEach(x=>sel.add(x.id));
+    });
+    SESSIONS.filter(s=>s.day===day&&s.general).forEach(s=>sel.add(s.id));
+  });
+  state.sel=sel;state.talks.clear();persist();updateCount();
+  setView('mine');toast('נבנה לו"ז מומלץ — בדוק/י וערוך/י לפי הצורך');
+}
+function clearAll(){if(confirm('לנקות את כל הבחירות?')){state.sel.clear();state.talks.clear();persist();updateCount();render();}}
+
+/* ---------- ICS ---------- */
+function pad(n){return String(n).padStart(2,'0')}
+function icsUTC(day,t){
+  const[Y,M,D]=day.split('-').map(Number);const[h,m]=t.split(':').map(Number);
+  const dt=new Date(Date.UTC(Y,M-1,D,h-3,m,0));
+  return dt.getUTCFullYear()+pad(dt.getUTCMonth()+1)+pad(dt.getUTCDate())+'T'+pad(dt.getUTCHours())+pad(dt.getUTCMinutes())+'00Z';
+}
+function downloadICS(){
+  const items=aItems().filter(it=>it.type!=='break');
+  if(!items.length){toast('אין פריטים נבחרים לייצוא');return;}
+  let L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//IES54//Schedule//HE','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:הכנס האנדוקריני ה-54 — הלו"ז שלי'];
+  items.forEach(it=>{
+    const desc=it.kind==='t'
+      ?['מתוך: '+it.sub,it.sp?'מרצה: '+it.sp:''].filter(Boolean).join('\\n')
+      :[it.chairs?'יו"ר: '+it.chairs:'',...(it.s.talks||[]).map(t=>`${t.s} ${t.t}${t.sp?' — '+t.sp:''}`)].filter(Boolean).join('\\n');
+    L.push('BEGIN:VEVENT','UID:'+it.key.replace('#','-')+'@ies54','DTSTAMP:'+icsUTC(it.day,it.start),
+      'DTSTART:'+icsUTC(it.day,it.start),'DTEND:'+icsUTC(it.day,it.end),
+      'SUMMARY:'+ics(it.title),'LOCATION:'+ics(HALLHE(it.hall)+' · מלון דיוויד אינטרקונטיננטל, תל אביב'),
+      'DESCRIPTION:'+ics(desc),'END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  const blob=new Blob([L.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='IES54-my-schedule.ics';a.click();
+  toast('קובץ היומן הורד — פתח/י אותו כדי להוסיף ליומן');
+}
+function ics(s){return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n')}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* ---------- export focused schedule as a single image (mobile) ---------- */
+async function downloadImage(){
+  const items=aItems().filter(it=>it.type!=='break')
+    .sort((a,b)=>a.day===b.day?toMin(a.start)-toMin(b.start):a.day<b.day?-1:1);
+  if(!items.length){toast('אין פריטים נבחרים לייצוא');return;}
+  try{await document.fonts.load('800 30px Heebo');await document.fonts.load('600 24px Heebo');await document.fonts.ready;}catch(e){}
+  const C={tealD:'#085450',ink:'#152826',muted:'#637875',line:'#dfe6e4',paper:'#fdfdfc',bg:'#f4f6f5',warn:'#b23b2e'};
+  const HBG={'Hall A':'#e1efed','Hall B':'#ece9f6','Hall D':'#f6e9e1','Hall H':'#e5f1e7','Hall I':'#e2eef4','Hall J':'#f6e6ee','Hall 5':'#f1efe1','Foyer':'#eaeeec'};
+  const HFG={'Hall A':'#0c6f68','Hall B':'#5b46a3','Hall D':'#a8542a','Hall H':'#2c7a3c','Hall I':'#1f6488','Hall J':'#9c3565','Hall 5':'#6f6121','Foyer':'#5f6e6a'};
+  const W=1080,M=46,PAD=22,scale=2;
+  const mc=document.createElement('canvas').getContext('2d');
+  function wrap(text,font,maxW){mc.font=font;const words=String(text).split(/\s+/);let lines=[],cur='';
+    for(const w of words){const tt=cur?cur+' '+w:w;if(mc.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w;}else cur=tt;}
+    if(cur)lines.push(cur);return lines;}
+  const conf=new Set();for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++)if(overlap(items[i],items[j])){conf.add(items[i].key);conf.add(items[j].key);}
+  const contentW=W-M*2, titleW=contentW-160;
+  let blocks=[],H=232,curDay='';
+  items.forEach(it=>{
+    if(it.day!==curDay){curDay=it.day;blocks.push({type:'day',day:it.day});H+=70;}
+    const tlines=wrap(it.title,'600 27px Heebo',titleW);
+    let speakers='';
+    if(it.kind==='t'){if(it.sp)speakers=it.sp.split('|')[0].trim();}
+    else if(it.s.talks&&it.s.talks.length){const sp=[...new Set(it.s.talks.map(t=>t.sp).filter(Boolean))];speakers=sp.slice(0,4).join(' · ')+(sp.length>4?' ועוד':'');}
+    const subParts=[it.kind==='t'?('הרצאה · '+it.sub):(TYPEHE[it.type]||'')];if(it.kind==='s'&&it.chairs)subParts.push('יו"ר: '+it.chairs);
+    const subLines=wrap(subParts.join(' · '),'400 19px Heebo',titleW);
+    const spLines=speakers?wrap('מרצה: '+speakers,'500 19px Heebo',titleW):[];
+    const rowH=PAD*2+tlines.length*34+subLines.length*25+spLines.length*25+(conf.has(it.key)?28:0);
+    blocks.push({type:'sess',it,tlines,subLines,spLines,rowH});H+=rowH+12;
+  });
+  H+=96;
+  const cv=document.createElement('canvas');cv.width=W*scale;cv.height=Math.ceil(H)*scale;
+  const x=cv.getContext('2d');x.scale(scale,scale);x.textBaseline='alphabetic';
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);
+  const RX=W-M;
+  function rtl(tx,xr,y,font,color){x.font=font;x.fillStyle=color;x.textAlign='right';x.direction='rtl';x.fillText(tx,xr,y);}
+  function ltr(tx,xl,y,font,color){x.font=font;x.fillStyle=color;x.textAlign='left';x.direction='ltr';x.fillText(tx,xl,y);}
+  function rr(xx,yy,ww,hh,r){x.beginPath();x.moveTo(xx+r,yy);x.arcTo(xx+ww,yy,xx+ww,yy+hh,r);x.arcTo(xx+ww,yy+hh,xx,yy+hh,r);x.arcTo(xx,yy+hh,xx,yy,r);x.arcTo(xx,yy,xx+ww,yy,r);x.closePath();}
+  const hg=x.createLinearGradient(0,0,W,232);hg.addColorStop(0,'#063c39');hg.addColorStop(1,'#0c6f68');
+  x.fillStyle=hg;x.fillRect(0,0,W,232);
+  rtl('כנס האביב · האגודה הישראלית לאנדוקרינולוגיה',RX,60,'800 21px Heebo','#a7e6dc');
+  rtl('הכנס המדעי ה-54 — הלו"ז שלי',RX,108,'900 38px Heebo','#ffffff');
+  rtl('15–16 ביולי 2026 · מלון דיוויד אינטרקונטיננטל, תל אביב',RX,150,'600 22px Heebo','#cdeee9');
+  if(store.name) rtl('הלו"ז של '+store.name,RX,196,'700 26px Heebo','#eafaf7');
+  let y=252;
+  blocks.forEach(b=>{
+    if(b.type==='day'){y+=34;rtl(DAYHE[b.day],RX,y,'800 25px Heebo',C.tealD);x.strokeStyle=C.line;x.lineWidth=2;x.beginPath();x.moveTo(M,y+12);x.lineTo(W-M,y+12);x.stroke();y+=30;return;}
+    const it=b.it,s={hall:it.hall,start:it.start,end:it.end},isC=conf.has(it.key);
+    x.fillStyle=C.paper;x.strokeStyle=isC?'#eec4bd':C.line;x.lineWidth=isC?2.5:1.5;
+    rr(M,y,contentW,b.rowH,16);x.fill();x.stroke();
+    x.fillStyle=HFG[s.hall]||'#888';rr(W-M-6,y+10,6,b.rowH-20,3);x.fill();
+    let ty=y+PAD+24;
+    ltr(s.start,M+18,ty,'800 26px Heebo',C.ink);
+    ltr(s.end,M+18,ty+26,'600 18px Heebo',C.muted);
+    const htxt=HALLHE(s.hall);x.font='700 17px Heebo';const hw=x.measureText(htxt).width+24;
+    x.fillStyle=HFG[s.hall]||'#888';rr(M+14,y+b.rowH-PAD-20,hw,28,8);x.fill();
+    ltr(htxt,M+14+12,y+b.rowH-PAD-1,'700 17px Heebo','#ffffff');
+    b.tlines.forEach(l=>{rtl(l,RX-18,ty,'600 27px Heebo',C.ink);ty+=34;});
+    b.subLines.forEach(l=>{rtl(l,RX-18,ty+2,'400 19px Heebo',C.muted);ty+=25;});
+    b.spLines.forEach(l=>{rtl(l,RX-18,ty+2,'500 19px Heebo',C.tealD);ty+=25;});
+    if(isC){rtl('⚠ חופף בזמן עם פריט אחר',RX-18,ty+4,'700 18px Heebo',C.warn);}
+    y+=b.rowH+12;
+  });
+  y+=10;x.fillStyle=C.tealD;x.fillRect(0,y,W,H-y);
+  rtl('פותח ע"י ד"ר רועי שליט · מדור חדשנות ו‑AI, האגודה הישראלית לאנדוקרינולוגיה',RX,y+44,'700 20px Heebo','#dff1ee');
+  rtl('כלי בלתי-רשמי · הנתונים מחוברת הכנס הרשמית',RX,y+72,'400 16px Heebo','#9ec9c3');
+  cv.toBlob(bb=>{const a=document.createElement('a');a.href=URL.createObjectURL(bb);a.download='IES54-לוז-אישי.png';a.click();toast('התמונה נשמרה — אפשר לשמור/לשתף מהנייד');},'image/png');
+}
+
+/* ---------- search by speaker ---------- */
+function renderSearch(){
+  const main=document.getElementById('main');main.innerHTML='';
+  const ql=state.q.toLowerCase();
+  const res=[];
+  SESSIONS.forEach(s=>{ if(s.type==='break')return; let added=false;
+    (s.talks||[]).forEach(tk=>{ if(tk.sp && tk.sp.toLowerCase().includes(ql)){res.push({s,tk});added=true;} });
+    if(!added && s.chairs && s.chairs.toLowerCase().includes(ql)) res.push({s,tk:null});
+  });
+  const head=document.createElement('div');head.className='sch-head';
+  head.innerHTML=`<div><div class="daytitle">תוצאות חיפוש</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${res.length} תוצאות עבור “${esc(state.q)}”</div></div>`+
+    `<div class="sch-actions no-print"><button class="btn btn-ghost" onclick="clearSearch()">✕ נקה חיפוש</button></div>`;
+  main.appendChild(head);
+  if(!res.length){main.insertAdjacentHTML('beforeend',`<div class="empty"><div class="big">🔍</div><b>לא נמצאו הרצאות עבור “${esc(state.q)}”.</b><p>נסה/י שם מרצה אחר — אפשר גם חלק מהשם, בעברית או באנגלית.</p></div>`);return;}
+  const grid=document.createElement('div');grid.className='grid';
+  res.forEach(({s,tk})=>{
+    const sel=state.sel.has(s.id);
+    const spk=(tk?(tk.sp||''):s.chairs).split('|')[0].trim();
+    const el=document.createElement('div');el.className='sess'+(sel?' selected':'');
+    el.innerHTML=`<div class="sess-top"><span class="tlabel">${DAYHE[s.day].split(',')[0]} · ${s.start}–${s.end}</span>${hallChip(s)}</div>`+
+      `<h3 dir="auto">${esc(tk?tk.t:s.display)}</h3>`+
+      `<div class="chairs"><b>${tk?'מרצה:':'יו"ר:'}</b> <span dir="auto">${esc(spk)}</span></div>`+
+      `<div class="m" style="font-size:12.5px;color:var(--muted);margin-top:5px">${esc(s.display)}</div>`+
+      `<div class="sess-foot"><span></span><button class="star ${sel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${sel}">${sel?IC.starFill+' נבחר':IC.star+' הוסף ללו\"ז'}</button></div>`;
+    grid.appendChild(el);
+  });
+  main.appendChild(grid);
+}
+function clearSearch(){state.q='';const i=document.getElementById('spkSearch');if(i)i.value='';render();}
+/* ---------- nav ---------- */
+function setView(v){state.view=v;
+  document.getElementById('vProgram').setAttribute('aria-selected',v==='program');
+  document.getElementById('vMine').setAttribute('aria-selected',v==='mine');
+  document.getElementById('filterTog').style.visibility=v==='program'?'visible':'hidden';
+  render();window.scrollTo({top:document.getElementById('toolbar').offsetTop-4,behavior:'smooth'});
+}
+function setDay(d){state.day=d;
+  document.getElementById('d15').setAttribute('aria-selected',d===DAYS[0]);
+  document.getElementById('d16').setAttribute('aria-selected',d===DAYS[1]);
+  render();
+}
+function render(){updateCount(); if(state.view==='mine'){renderMine();return;} if(state.q&&state.q.length>=2){renderSearch();return;} renderProgram();}
+
+document.getElementById('vProgram').onclick=()=>setView('program');
+document.getElementById('vMine').onclick=()=>setView('mine');
+document.getElementById('d15').onclick=()=>setDay(DAYS[0]);
+document.getElementById('d16').onclick=()=>setDay(DAYS[1]);
+document.getElementById('autoBtn').onclick=autoBuild;
+document.getElementById('spkSearch').oninput=function(e){state.q=e.target.value.trim();document.getElementById('vProgram').setAttribute('aria-selected','true');document.getElementById('vMine').setAttribute('aria-selected','false');state.view='program';render();};
+document.getElementById('browseBtn').onclick=()=>document.getElementById('toolbar').scrollIntoView({behavior:'smooth'});
+document.getElementById('filterTog').onclick=()=>{state.filter=!state.filter;store.filt=state.filter;document.getElementById('filtSw').classList.toggle('on',state.filter);render();};
+
+renderChips();
+document.getElementById('filtSw').classList.toggle('on',state.filter);
+updateCount();
+render();
+</script>
+</body>
+</html>
