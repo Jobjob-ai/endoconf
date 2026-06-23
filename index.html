@@ -275,7 +275,7 @@ footer .credit{display:inline-block;font-weight:800;color:var(--teal-d);backgrou
 .searchbar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:11px 14px;box-shadow:var(--shadow-sm);min-height:46px}
 .searchbar:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-l)}
 .searchbar svg{color:var(--muted);flex:none}
-.searchbar input{border:none;outline:none;background:none;font-family:inherit;font-size:15.5px;width:100%;color:var(--ink)}
+.searchbar input{border:none;outline:none;background:none;font-family:inherit;font-size:15.5px;width:100%;color:var(--ink);direction:auto;text-align:start}
 .searchbar input::placeholder{color:#9aada9}
 .talk{align-items:flex-start}
 .talk .td{flex:1;min-width:0}
@@ -284,6 +284,14 @@ footer .credit{display:inline-block;font-weight:800;color:var(--teal-d);backgrou
 .talkadd:hover{background:var(--amber-l)}
 .talkadd.on{background:var(--amber);color:#fff;border-color:var(--amber)}
 .kindpip{background:var(--amber-l);color:var(--amber-d);font-weight:800;font-size:11px;padding:1px 7px;border-radius:20px}
+
+/* ===================== BIDI / RTL-LTR MIXING HELPERS ===================== */
+/* Numeric time ranges (e.g. 15:30–16:00) must always render left-to-right and
+   stay visually isolated from surrounding RTL text, regardless of context. */
+.bidi-ltr{direction:ltr;unicode-bidi:isolate}
+/* Hall labels mix a Hebrew word with a bare Latin letter ("אולם A") — isolate
+   the whole label so the Latin letter can't get re-ordered next to Hebrew text. */
+.hall,.hpip{unicode-bidi:isolate}
 </style>
 </head>
 <body>
@@ -441,7 +449,7 @@ function aItems(){
 function aConf(it,sameDay){return aItems().filter(o=>o.key!==it.key&&(!sameDay||o.day===it.day)&&overlap(it,o));}
 
 /* ---------- program render ---------- */
-function talksHtml(s){return (s.talks||[]).map((t,i)=>{const k=s.id+'#'+i,on=state.talks.has(k);return `<div class="talk${on?' picked':''}"><span class="tt">${esc(t.s)}–${esc(t.e)}</span><span class="td"><b dir="auto">${esc(t.t)}</b>${t.sp?`<span class="sp" dir="auto">${esc(t.sp)}</span>`:''}</span><button class="talkadd${on?' on':''}" aria-pressed="${on}" title="${on?'הסר מהלו\"ז':'הוסף הרצאה ללו\"ז'}" onclick="event.stopPropagation();toggleTalk('${s.id}',${i})">${on?'✓':'+'}</button></div>`}).join('');}
+function talksHtml(s){return (s.talks||[]).map((t,i)=>{const k=s.id+'#'+i,on=state.talks.has(k);return `<div class="talk${on?' picked':''}"><span class="tt bidi-ltr">${esc(t.s)}–${esc(t.e)}</span><span class="td"><b dir="auto">${esc(t.t)}</b>${t.sp?`<span class="sp" dir="auto">${esc(t.sp)}</span>`:''}</span><button class="talkadd${on?' on':''}" aria-pressed="${on}" title="${on?'הסר מהלו\"ז':'הוסף הרצאה ללו\"ז'}" onclick="event.stopPropagation();toggleTalk('${s.id}',${i})">${on?'✓':'+'}</button></div>`}).join('');}
 function hallChip(s){return `<span class="hall" style="background:${HALLCOLOR[s.hall]||'#555'};color:#fff">${HALLHE(s.hall)}</span>`;}
 function toggleTalks(id,btn){const e=document.getElementById('tk_'+id);if(!e)return;const open=e.classList.toggle('open');const n=((byId(id)||{}).talks||[]).length;btn.textContent=open?'הסתר הרצאות ▴':('בחר/הצג '+n+' הרצאות ▾');}
 function sessionCard(s){
@@ -457,7 +465,7 @@ function sessionCard(s){
     <h3 dir="auto">${esc(s.display)}</h3>
     ${match?`<div class="match-flag">${IC.check} מתאים לתחומי העניין שלך</div>`:''}
     ${s.chairs?`<div class="chairs"><b>יו"ר:</b> <span dir="auto">${esc(s.chairs)}</span></div>`:''}
-    ${s.sponsor?`<div class="spons">${IC.sponsor} בחסות: ${esc(s.sponsor)}</div>`:''}
+    ${s.sponsor?`<div class="spons">${IC.sponsor} בחסות: <span dir="auto">${esc(s.sponsor)}</span></div>`:''}
     ${s.topics&&s.topics.length?`<div class="badges">${s.topics.map(t=>`<span class="tb">${esc(TOPICS[t]||t)}</span>`).join('')}</div>`:''}
     ${talks?`<div class="talks" id="tk_${s.id}">${talks}</div>`:''}
     <div class="sess-foot">
@@ -471,7 +479,7 @@ function bannerCard(s){
   const el=document.createElement('div');
   el.className='sess full '+(s.type==='break'?'brk':'gen')+(sel?' selected':'');
   if(s.type==='break'){
-    el.innerHTML=`<span style="font-weight:700;color:var(--muted)">${esc(s.display)}</span>${hallChip(s)}`;
+    el.innerHTML=`<span style="font-weight:700;color:var(--muted)" dir="auto">${esc(s.display)}</span>${hallChip(s)}`;
     return el;
   }
   const talks=talksHtml(s);
@@ -509,7 +517,7 @@ function renderProgram(){
     shown++;
     const slot=document.createElement('div');slot.className='slot';
     const end=group[0].end;
-    slot.innerHTML=`<div class="slot-time"><b>${tm}–${end}</b><div class="ln"></div>${isParallel?`<span class="par-tag">${group.filter(s=>s.type!=='break').length} מושבים במקביל — בחר/י אחד</span>`:''}</div>`;
+    slot.innerHTML=`<div class="slot-time"><b class="bidi-ltr">${tm}–${end}</b><div class="ln"></div>${isParallel?`<span class="par-tag">${group.filter(s=>s.type!=='break').length} מושבים במקביל — בחר/י אחד</span>`:''}</div>`;
     const grid=document.createElement('div');grid.className='grid';
     vis.forEach(s=>{
       if(s.general||s.type==='break') grid.appendChild(bannerCard(s));
@@ -556,15 +564,15 @@ function renderMine(){
     const conf=aConf(it,true);
     const isT=it.kind==='t';
     const meta=isT
-      ?`<span class="kindpip">הרצאה</span><span>מתוך: ${esc(it.sub)}</span>${it.sp?`<span>· ${esc(it.sp.split('|')[0].trim())}</span>`:''}`
-      :`<span>${TYPEHE[it.type]||''}</span>${it.chairs?`<span>· יו"ר: ${esc(it.chairs)}</span>`:''}`;
+      ?`<span class="kindpip">הרצאה</span><span>מתוך: <span dir="auto">${esc(it.sub)}</span></span>${it.sp?`<span>· <span dir="auto">${esc(it.sp.split('|')[0].trim())}</span></span>`:''}`
+      :`<span>${TYPEHE[it.type]||''}</span>${it.chairs?`<span>· יו"ר: <span dir="auto">${esc(it.chairs)}</span></span>`:''}`;
     const row=document.createElement('div');row.className='tl-item'+(conf.length?' has-conf':'');
-    row.innerHTML=`<div class="tl-time"><b>${it.start}</b><span>${it.end}</span></div>
+    row.innerHTML=`<div class="tl-time"><b class="bidi-ltr">${it.start}</b><span class="bidi-ltr">${it.end}</span></div>
       <div class="tl-rail"></div>
       <div class="tl-body">
         <h3 dir="auto">${esc(it.title)}</h3>
         <div class="m"><span class="hpip" style="background:${HALLCOLOR[it.hall]||'#555'};color:#fff">${HALLHE(it.hall)}</span>${meta}</div>
-        ${conf.length?`<div class="tl-conf">${IC.warn} <span>חופף עם: ${conf.map(c=>esc(c.title)).join(' · ')}</span></div>`:''}
+        ${conf.length?`<div class="tl-conf">${IC.warn} <span>חופף עם: <span dir="auto">${conf.map(c=>esc(c.title)).join(' · ')}</span></span></div>`:''}
         ${(it.kind==='s'&&state.autoAlt&&state.autoAlt[it.key])?`<div class="tl-alt">${IC.check} <span>נבחר עבורך כהתאמה הטובה ביותר לשעה זו${state.autoAlt[it.key]>1?` · יש עוד ${state.autoAlt[it.key]} מושבים מקבילים תואמים בתוכנייה`:` · יש עוד מושב מקביל תואם אחד בתוכנייה`}</span></div>`:''}
       </div>
       <button class="rm no-print" onclick="removeItem('${it.key}')">הסר ✕</button>`;
@@ -709,19 +717,19 @@ function renderSearch(){
     if(!added && s.chairs && s.chairs.toLowerCase().includes(ql)) res.push({s,tk:null});
   });
   const head=document.createElement('div');head.className='sch-head';
-  head.innerHTML=`<div><div class="daytitle">תוצאות חיפוש</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${res.length} תוצאות עבור “${esc(state.q)}”</div></div>`+
+  head.innerHTML=`<div><div class="daytitle">תוצאות חיפוש</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${res.length} תוצאות עבור “<span dir="auto">${esc(state.q)}</span>”</div></div>`+
     `<div class="sch-actions no-print"><button class="btn btn-ghost" onclick="clearSearch()">✕ נקה חיפוש</button></div>`;
   main.appendChild(head);
-  if(!res.length){main.insertAdjacentHTML('beforeend',`<div class="empty"><div class="big">🔍</div><b>לא נמצאו הרצאות עבור “${esc(state.q)}”.</b><p>נסה/י שם מרצה אחר — אפשר גם חלק מהשם, בעברית או באנגלית.</p></div>`);return;}
+  if(!res.length){main.insertAdjacentHTML('beforeend',`<div class="empty"><div class="big">🔍</div><b>לא נמצאו הרצאות עבור “<span dir="auto">${esc(state.q)}</span>”.</b><p>נסה/י שם מרצה אחר — אפשר גם חלק מהשם, בעברית או באנגלית.</p></div>`);return;}
   const grid=document.createElement('div');grid.className='grid';
   res.forEach(({s,tk})=>{
     const sel=state.sel.has(s.id);
     const spk=(tk?(tk.sp||''):s.chairs).split('|')[0].trim();
     const el=document.createElement('div');el.className='sess'+(sel?' selected':'');
-    el.innerHTML=`<div class="sess-top"><span class="tlabel">${DAYHE[s.day].split(',')[0]} · ${s.start}–${s.end}</span>${hallChip(s)}</div>`+
+    el.innerHTML=`<div class="sess-top"><span class="tlabel">${DAYHE[s.day].split(',')[0]} · <span class="bidi-ltr">${s.start}–${s.end}</span></span>${hallChip(s)}</div>`+
       `<h3 dir="auto">${esc(tk?tk.t:s.display)}</h3>`+
       `<div class="chairs"><b>${tk?'מרצה:':'יו"ר:'}</b> <span dir="auto">${esc(spk)}</span></div>`+
-      `<div class="m" style="font-size:12.5px;color:var(--muted);margin-top:5px">${esc(s.display)}</div>`+
+      `<div class="m" style="font-size:12.5px;color:var(--muted);margin-top:5px" dir="auto">${esc(s.display)}</div>`+
       `<div class="sess-foot"><span></span><button class="star ${sel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${sel}">${sel?IC.starFill+' נבחר':IC.star+' הוסף ללו\"ז'}</button></div>`;
     grid.appendChild(el);
   });
