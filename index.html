@@ -234,6 +234,12 @@ main{padding:22px 0 70px}
 .rm{color:var(--muted);font-size:13px;font-weight:700;flex:none;align-self:center;border:1.5px solid var(--line);
   border-radius:9px;padding:8px 12px;min-height:40px;transition:.15s var(--ease);white-space:nowrap}
 .rm:hover{color:var(--warn);border-color:var(--warn-line);background:var(--warn-l)}
+.tl-actions{display:flex;flex-direction:column;gap:6px;flex:none;align-self:center}
+.btn-gcal{color:var(--teal-d);font-size:13px;font-weight:700;flex:none;border:1.5px solid var(--teal-ring);
+  border-radius:9px;padding:8px 12px;min-height:40px;transition:.15s var(--ease);white-space:nowrap;
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;text-decoration:none;background:var(--teal-l2)}
+.btn-gcal:hover{border-color:var(--teal);background:var(--teal-l);color:var(--teal-dd)}
+
 
 footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--muted);font-size:13px;
   text-align:center;line-height:1.6}
@@ -284,13 +290,9 @@ footer .credit{display:inline-block;font-weight:800;color:var(--teal-d);backgrou
 .talkadd:hover{background:var(--amber-l)}
 .talkadd.on{background:var(--amber);color:#fff;border-color:var(--amber)}
 .kindpip{background:var(--amber-l);color:var(--amber-d);font-weight:800;font-size:11px;padding:1px 7px;border-radius:20px}
+.hopchip{display:inline-flex;align-items:center;gap:4px;background:var(--amber-l);color:var(--amber-d);font-weight:800;font-size:11px;padding:2px 9px;border-radius:20px;margin-inline-end:5px}
+.sess.brk .star{margin-top:8px}
 </style>
-<script>
-  window.va = window.va || function () { 
-    (window.vaq = window.vaq || []).push(arguments); 
-  };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <header class="hero">
@@ -356,7 +358,7 @@ footer .credit{display:inline-block;font-weight:800;color:var(--teal-d);backgrou
 <div class="wrap" style="margin-top:14px">
   <div class="searchbar">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-    <input id="spkSearch" type="search" placeholder="חיפוש הרצאה לפי שם מרצה…" aria-label="חיפוש הרצאה לפי שם מרצה" autocomplete="off">
+    <input id="spkSearch" type="search" placeholder="חיפוש מרצה — נא להקליד באנגלית (למשל Tirosh)…" aria-label="חיפוש מרצה באנגלית" autocomplete="off">
   </div>
 </div>
 <main class="wrap" id="main"></main>
@@ -400,7 +402,7 @@ const store={
   get filt(){return localStorage.getItem('ies_filt')==='1'},
   set filt(v){localStorage.setItem('ies_filt',v?'1':'0')}
 };
-let state={view:'program',day:'2026-07-15',filter:store.filt,topics:store.topics,sel:new Set(store.sel),talks:new Set(store.talks),autoAlt:{}};
+let state={view:'program',day:'2026-07-15',filter:store.filt,topics:store.topics,sel:new Set(store.sel),talks:new Set(store.talks),autoAlt:{},open:new Set(),q:''};
 const byId=id=>SESSIONS.find(s=>s.id===id);
 const toMin=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
 const overlap=(a,b)=>a.day===b.day && toMin(a.start)<toMin(b.end) && toMin(b.start)<toMin(a.end);
@@ -449,7 +451,7 @@ function aConf(it,sameDay){return aItems().filter(o=>o.key!==it.key&&(!sameDay||
 /* ---------- program render ---------- */
 function talksHtml(s){return (s.talks||[]).map((t,i)=>{const k=s.id+'#'+i,on=state.talks.has(k);return `<div class="talk${on?' picked':''}"><span class="tt">${esc(t.s)}–${esc(t.e)}</span><span class="td"><b dir="auto">${esc(t.t)}</b>${t.sp?`<span class="sp" dir="auto">${esc(t.sp)}</span>`:''}</span><button class="talkadd${on?' on':''}" aria-pressed="${on}" title="${on?'הסר מהלו\"ז':'הוסף הרצאה ללו\"ז'}" onclick="event.stopPropagation();toggleTalk('${s.id}',${i})">${on?'✓':'+'}</button></div>`}).join('');}
 function hallChip(s){return `<span class="hall" style="background:${HALLCOLOR[s.hall]||'#555'};color:#fff">${HALLHE(s.hall)}</span>`;}
-function toggleTalks(id,btn){const e=document.getElementById('tk_'+id);if(!e)return;const open=e.classList.toggle('open');const n=((byId(id)||{}).talks||[]).length;btn.textContent=open?'הסתר הרצאות ▴':('בחר/הצג '+n+' הרצאות ▾');}
+function toggleTalks(id,btn){const e=document.getElementById('tk_'+id);if(!e)return;const open=e.classList.toggle('open');if(open)state.open.add(id);else state.open.delete(id);const n=((byId(id)||{}).talks||[]).length;btn.textContent=open?'הסתר הרצאות ▴':('בחר/הצג '+n+' הרצאות ▾');}
 function sessionCard(s){
   const sel=state.sel.has(s.id),match=matches(s);
   const el=document.createElement('div');
@@ -465,9 +467,9 @@ function sessionCard(s){
     ${s.chairs?`<div class="chairs"><b>יו"ר:</b> <span dir="auto">${esc(s.chairs)}</span></div>`:''}
     ${s.sponsor?`<div class="spons">${IC.sponsor} בחסות: ${esc(s.sponsor)}</div>`:''}
     ${s.topics&&s.topics.length?`<div class="badges">${s.topics.map(t=>`<span class="tb">${esc(TOPICS[t]||t)}</span>`).join('')}</div>`:''}
-    ${talks?`<div class="talks" id="tk_${s.id}">${talks}</div>`:''}
+    ${talks?`<div class="talks${state.open.has(s.id)?' open':''}" id="tk_${s.id}">${talks}</div>`:''}
     <div class="sess-foot">
-      ${talks?`<button class="linkbtn" onclick="toggleTalks('${s.id}',this)">בחר/הצג ${s.talks.length} הרצאות ▾</button>`:'<span></span>'}
+      ${talks?`<button class="linkbtn" onclick="toggleTalks('${s.id}',this)">${state.open.has(s.id)?'הסתר הרצאות ▴':('בחר/הצג '+s.talks.length+' הרצאות ▾')}</button>`:'<span></span>'}
       <button class="star ${sel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${sel}">${sel?IC.starFill+' נבחר':IC.star+' הוסף ללו"ז'}</button>
     </div>`;
   return el;
@@ -477,7 +479,9 @@ function bannerCard(s){
   const el=document.createElement('div');
   el.className='sess full '+(s.type==='break'?'brk':'gen')+(sel?' selected':'');
   if(s.type==='break'){
-    el.innerHTML=`<span style="font-weight:700;color:var(--muted)">${esc(s.display)}</span>${hallChip(s)}`;
+    const bsel=state.sel.has(s.id);
+    el.className='sess full brk'+(bsel?' selected':'');
+    el.innerHTML=`<span style="font-weight:700;color:var(--muted)">${esc(s.display)}</span>${hallChip(s)}<button class="star ${bsel?'on':''}" onclick="toggleSel('${s.id}')" aria-pressed="${bsel}">${bsel?IC.starFill+' בלו"ז':IC.star+' הוסף ללו"ז'}</button>`;
     return el;
   }
   const talks=talksHtml(s);
@@ -535,9 +539,11 @@ function renderMine(){
   const head=document.createElement('div');head.className='sch-head';
   head.innerHTML=`<div><div class="daytitle">${DAYHE[state.day]}</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${total} פריטים בלו"ז (מושבים + הרצאות)${store.name?` · הלו"ז של ${esc(store.name)}`:''}</div></div>
     <div class="sch-actions no-print">
-      <button class="btn btn-primary" onclick="downloadICS()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg> הורד ליומן (ICS)</button>
-      <button class="btn btn-accent" onclick="downloadImage()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> שמור כתמונה לנייד</button>
+      <button class="btn btn-primary" onclick="downloadICS('day')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg> יומן — יום זה</button>
+      <button class="btn btn-accent" onclick="downloadImage('day')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> תמונה — יום זה</button>
       <button class="btn btn-ghost" onclick="window.print()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> הדפסה / PDF</button>
+      <button class="btn btn-ghost" onclick="downloadICS('all')">📅 יומן — כל הכנס</button>
+      <button class="btn btn-ghost" onclick="downloadImage('all')">🖼️ תמונה — כל הכנס</button>
       ${total?`<button class="btn btn-ghost" onclick="clearAll()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> נקה הכל</button>`:''}
     </div>`;
   main.appendChild(head);
@@ -558,8 +564,9 @@ function renderMine(){
   card.appendChild(ttl);
   const dd=document.createElement('div');dd.style.cssText='color:var(--muted);font-size:13px;margin:3px 0 14px';
   dd.textContent=DAYHE[state.day]+' · מלון דיוויד אינטרקונטיננטל, תל אביב';card.appendChild(dd);
-  items.forEach(it=>{
+  items.forEach((it,idx)=>{
     const conf=aConf(it,true);
+    const hop=idx>0&&items[idx-1].day===it.day&&items[idx-1].hall!==it.hall;
     const isT=it.kind==='t';
     const meta=isT
       ?`<span class="kindpip">הרצאה</span><span>מתוך: ${esc(it.sub)}</span>${it.sp?`<span>· ${esc(it.sp.split('|')[0].trim())}</span>`:''}`
@@ -569,42 +576,81 @@ function renderMine(){
       <div class="tl-rail"></div>
       <div class="tl-body">
         <h3 dir="auto">${esc(it.title)}</h3>
-        <div class="m"><span class="hpip" style="background:${HALLCOLOR[it.hall]||'#555'};color:#fff">${HALLHE(it.hall)}</span>${meta}</div>
+        <div class="m">${hop?`<span class="hopchip">⇄ מעבר לאולם ${HALLHE(it.hall)}</span>`:''}<span class="hpip" style="background:${HALLCOLOR[it.hall]||'#555'};color:#fff">${HALLHE(it.hall)}</span>${meta}</div>
         ${conf.length?`<div class="tl-conf">${IC.warn} <span>חופף עם: ${conf.map(c=>esc(c.title)).join(' · ')}</span></div>`:''}
         ${(it.kind==='s'&&state.autoAlt&&state.autoAlt[it.key])?`<div class="tl-alt">${IC.check} <span>נבחר עבורך כהתאמה הטובה ביותר לשעה זו${state.autoAlt[it.key]>1?` · יש עוד ${state.autoAlt[it.key]} מושבים מקבילים תואמים בתוכנייה`:` · יש עוד מושב מקביל תואם אחד בתוכנייה`}</span></div>`:''}
       </div>
-      <button class="rm no-print" onclick="removeItem('${it.key}')">הסר ✕</button>`;
+      <div class="tl-actions no-print">
+        <a class="btn-gcal" href="${gcalUrl(it)}" target="_blank" rel="noopener">📅 לגוגל</a>
+        <button class="rm" onclick="removeItem('${it.key}')">הסר ✕</button>
+      </div>`;
     card.appendChild(row);
+
   });
   main.appendChild(card);
 }
 
 /* ---------- auto build ---------- */
+const TALK_KW={
+ obesity:["obes","weight","adipos","bariatric","bmi","body mass","appetite","time-restricted"],
+ diabetes:["diabet","insulin","gluc","glyc","beta cell","β-cell","islet","hba1c","cgm","hyperglycem","t1d","t2d","ketoacid","glp-1","sglt","pancrea"],
+ thyroid:["thyroid","tsh","graves","hypothyroid","thyrotox","goiter","nodule","levothyroxine","ti-rads","bethesda","iodine"],
+ bone:["bone","osteo","fracture","dxa","mineral density","romosozumab","parathyroid","vitamin d","calcium","trabecular"],
+ adrenal:["adrenal","cortisol","aldosteron","cushing","pheochromocytoma","hydrocortisone","synacthen","hyperaldosteron"],
+ fertility:["ovar","fertil","menopause","estro","estri","testosterone","sperm","amh","lhrh","gonad","sex hormone","transgender","puberty","estrous","polycystic","pcos"],
+ pituitary:["pituitary","acromegaly","prolactin","growth hormone","adenoma","hypophysitis","somatostatin","gonadotrope","nfpa"],
+ net:["neuroendocrine","carcinoid","dipnech","ki-67","gepnen"],
+ lipids:["lipid","triglyceride","cholesterol","ldl","hdl","atheroscler"],
+ basic:["transcription","chromatin","single-cell","rna sequenc","organoid","mtor","autophagy"]
+};
 function topicScore(s){return (state.topics.length&&s.topics)?s.topics.filter(t=>state.topics.includes(t)).length:0;}
+function titleHits(talk){const t=((talk&&talk.t)||'').toLowerCase();return state.topics.filter(tp=>(TALK_KW[tp]||[]).some(k=>t.includes(k))).length;}
+function talkScore(talk,s){return topicScore(s)+2*titleHits(talk);}
 function autoBuild(){
   if(!state.topics.length){toast('בחר/י קודם תחומי עניין');document.getElementById('onb').scrollIntoView({behavior:'smooth'});return;}
-  const sel=new Set();
-  const chosen=[];
+  const sel=new Set(), talks=new Set(), chosen=[], alt={};
   const clashes=it=>chosen.some(o=>o.day===it.day&&toMin(it.start)<toMin(o.end)&&toMin(o.start)<toMin(it.end));
   const place=s=>{sel.add(s.id);chosen.push({day:s.day,start:s.start,end:s.end});};
-  const alt={};
+  const placeTalk=(s,idx)=>{talks.add(s.id+'#'+idx);chosen.push({day:s.day,start:s.talks[idx].s,end:s.talks[idx].e});};
   DAYS.forEach(day=>{
     SESSIONS.filter(s=>s.day===day&&s.general).forEach(s=>{if(!clashes(s))place(s);});
     const slots={};
     SESSIONS.filter(s=>s.day===day&&s.type!=='break'&&!s.general).forEach(s=>{(slots[s.start]=slots[s.start]||[]).push(s)});
     Object.keys(slots).sort((a,b)=>toMin(a)-toMin(b)).forEach(start=>{
       const group=slots[start];
-      const cands=group.map((s,i)=>({s,i,sc:topicScore(s)})).filter(c=>c.sc>0).sort((a,b)=>b.sc-a.sc||a.i-b.i);
-      if(!cands.length) return;
-      const pick=cands.find(c=>!clashes(c.s));
-      if(!pick) return;
-      place(pick.s);
-      const others=cands.length-1;
-      if(others>0) alt[pick.s.id]=others;
+      const isTalkBlock=group.every(s=>s.type==='abstracts'||s.type==='flash');
+      if(isTalkBlock){
+        const halls=group.filter(s=>topicScore(s)>0);           /* only on-topic halls are hop candidates */
+        if(!halls.length) return;
+        const bp=new Set();
+        halls.forEach(s=>(s.talks||[]).forEach(t=>{bp.add(toMin(t.s));bp.add(toMin(t.e));}));
+        const pts=[...bp].sort((a,b)=>a-b);
+        let cur=null;
+        for(let k=0;k<pts.length-1;k++){
+          const a=pts[k], b=pts[k+1], cand=[];
+          halls.forEach(s=>{const idx=(s.talks||[]).findIndex(t=>toMin(t.s)<=a&&toMin(t.e)>=b);
+            if(idx>=0)cand.push({s,idx,talk:s.talks[idx],sc:talkScore(s.talks[idx],s)});});
+          const pool=cand.filter(c=>c.sc>0);
+          if(!pool.length) continue;
+          const best=Math.max.apply(null,pool.map(c=>c.sc));
+          let pick=null;
+          if(cur!=null){const stay=pool.find(c=>c.s.id===cur&&c.sc===best); if(stay)pick=stay;}
+          if(!pick) pick=pool.filter(c=>c.sc===best).sort((x,y)=>group.indexOf(x.s)-group.indexOf(y.s))[0];
+          if(clashes({day,start:pick.talk.s,end:pick.talk.e})) continue;
+          placeTalk(pick.s,pick.idx); cur=pick.s.id;
+        }
+      } else {
+        const cands=group.map((s,i)=>({s,i,sc:topicScore(s)})).filter(c=>c.sc>0).sort((a,b)=>b.sc-a.sc||a.i-b.i);
+        if(!cands.length) return;
+        const pick=cands.find(c=>!clashes(c.s));
+        if(!pick) return;
+        place(pick.s);
+        const others=cands.length-1; if(others>0) alt[pick.s.id]=others;
+      }
     });
   });
-  state.sel=sel;state.talks.clear();state.autoAlt=alt;persist();updateCount();
-  setView('mine');toast('נבנה לו"ז מומלץ — בדוק/י וערוך/י לפי הצורך');
+  state.sel=sel;state.talks=talks;state.autoAlt=alt;persist();updateCount();
+  setView('mine');toast('נבנה לו"ז מומלץ עם דילוג חכם בין אולמות — בדוק/י וערוך/י לפי הצורך');
 }
 function clearAll(){if(confirm('לנקות את כל הבחירות?')){state.sel.clear();state.talks.clear();persist();updateCount();render();}}
 
@@ -615,9 +661,20 @@ function icsUTC(day,t){
   const dt=new Date(Date.UTC(Y,M-1,D,h-3,m,0));
   return dt.getUTCFullYear()+pad(dt.getUTCMonth()+1)+pad(dt.getUTCDate())+'T'+pad(dt.getUTCHours())+pad(dt.getUTCMinutes())+'00Z';
 }
-function downloadICS(){
-  const items=aItems().filter(it=>it.type!=='break');
-  if(!items.length){toast('אין פריטים נבחרים לייצוא');return;}
+function gcalUrl(it){
+  const title=encodeURIComponent(it.title);
+  const dates=icsUTC(it.day,it.start)+'/'+icsUTC(it.day,it.end);
+  const loc=encodeURIComponent(HALLHE(it.hall)+' · מלון דיוויד אינטרקונטיננטל, תל אביב');
+  const desc=it.kind==='t'
+    ?['מתוך: '+it.sub,it.sp?'מרצה: '+it.sp:''].filter(Boolean).join('\n')
+    :[it.chairs?'יו"ר: '+it.chairs:'',...(it.s.talks||[]).map(t=>`${t.s} ${t.t}${t.sp?' — '+t.sp:''}`)].filter(Boolean).join('\n');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${encodeURIComponent(desc)}&location=${loc}`;
+}
+
+function downloadICS(scope){
+  const day=scope==='all'?null:state.day;
+  const items=aItems().filter(it=>!day||it.day===day);
+  if(!items.length){toast('אין פריטים נבחרים לייצוא ליום זה');return;}
   let L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//IES54//Schedule//HE','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:הכנס האנדוקריני ה-54 — הלו"ז שלי'];
   items.forEach(it=>{
     const desc=it.kind==='t'
@@ -631,17 +688,19 @@ function downloadICS(){
   L.push('END:VCALENDAR');
   const blob=new Blob([L.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='IES54-my-schedule.ics';a.click();
+  a.download=(day?'IES54-'+day:'IES54-full')+'.ics';a.click();
   toast('קובץ היומן הורד — פתח/י אותו כדי להוסיף ליומן');
 }
 function ics(s){return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n')}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 /* ---------- export focused schedule as a single image (mobile) ---------- */
-async function downloadImage(){
-  const items=aItems().filter(it=>it.type!=='break')
+async function downloadImage(scope){
+  const day=scope==='all'?null:state.day;
+  const items=aItems().filter(it=>!day||it.day===day)
     .sort((a,b)=>a.day===b.day?toMin(a.start)-toMin(b.start):a.day<b.day?-1:1);
-  if(!items.length){toast('אין פריטים נבחרים לייצוא');return;}
+  if(!items.length){toast('אין פריטים נבחרים לייצוא ליום זה');return;}
+  let __ph=null,__pd=null; items.forEach(it=>{it._hop=(it.day===__pd&&__ph!==null&&__ph!==it.hall);__ph=it.hall;__pd=it.day;});
   try{await document.fonts.load('800 30px Heebo');await document.fonts.load('600 24px Heebo');await document.fonts.ready;}catch(e){}
   const C={tealD:'#085450',ink:'#152826',muted:'#637875',line:'#dfe6e4',paper:'#fdfdfc',bg:'#f4f6f5',warn:'#b23b2e'};
   const HBG={'Hall A':'#e1efed','Hall B':'#ece9f6','Hall D':'#f6e9e1','Hall H':'#e5f1e7','Hall I':'#e2eef4','Hall J':'#f6e6ee','Hall 5':'#f1efe1','Foyer':'#eaeeec'};
@@ -690,8 +749,8 @@ async function downloadImage(){
     let ty=y+PAD+24;
     ltr(s.start,M+18,ty,'800 26px Heebo',C.ink);
     ltr(s.end,M+18,ty+26,'600 18px Heebo',C.muted);
-    const htxt=HALLHE(s.hall);x.font='700 17px Heebo';const hw=x.measureText(htxt).width+24;
-    x.fillStyle=HFG[s.hall]||'#888';rr(M+14,y+b.rowH-PAD-20,hw,28,8);x.fill();
+    const hop=b.it._hop; const htxt=(hop?'⇄ ':'')+HALLHE(s.hall);x.font='700 17px Heebo';const hw=x.measureText(htxt).width+24;
+    x.fillStyle=hop?'#b06a1f':(HFG[s.hall]||'#888');rr(M+14,y+b.rowH-PAD-20,hw,28,8);x.fill();
     ltr(htxt,M+14+12,y+b.rowH-PAD-1,'700 17px Heebo','#ffffff');
     b.tlines.forEach(l=>{rtl(l,RX-18,ty,'600 27px Heebo',C.ink);ty+=34;});
     b.subLines.forEach(l=>{rtl(l,RX-18,ty+2,'400 19px Heebo',C.muted);ty+=25;});
@@ -702,7 +761,7 @@ async function downloadImage(){
   y+=10;x.fillStyle=C.tealD;x.fillRect(0,y,W,H-y);
   rtl('פותח ע"י ד"ר רועי שליט · מדור חדשנות ו‑AI, האגודה הישראלית לאנדוקרינולוגיה',RX,y+44,'700 20px Heebo','#dff1ee');
   rtl('כלי בלתי-רשמי · הנתונים מחוברת הכנס הרשמית',RX,y+72,'400 16px Heebo','#9ec9c3');
-  cv.toBlob(bb=>{const a=document.createElement('a');a.href=URL.createObjectURL(bb);a.download='IES54-לוז-אישי.png';a.click();toast('התמונה נשמרה — אפשר לשמור/לשתף מהנייד');},'image/png');
+  cv.toBlob(bb=>{const a=document.createElement('a');a.href=URL.createObjectURL(bb);a.download='IES54-'+(day||'full')+'-לוז.png';a.click();toast('התמונה נשמרה — אפשר לשמור/לשתף מהנייד');},'image/png');
 }
 
 /* ---------- search by speaker ---------- */
@@ -718,7 +777,7 @@ function renderSearch(){
   head.innerHTML=`<div><div class="daytitle">תוצאות חיפוש</div><div style="font-size:13px;color:var(--muted);margin-top:2px">${res.length} תוצאות עבור “${esc(state.q)}”</div></div>`+
     `<div class="sch-actions no-print"><button class="btn btn-ghost" onclick="clearSearch()">✕ נקה חיפוש</button></div>`;
   main.appendChild(head);
-  if(!res.length){main.insertAdjacentHTML('beforeend',`<div class="empty"><div class="big">🔍</div><b>לא נמצאו הרצאות עבור “${esc(state.q)}”.</b><p>נסה/י שם מרצה אחר — אפשר גם חלק מהשם, בעברית או באנגלית.</p></div>`);return;}
+  if(!res.length){main.insertAdjacentHTML('beforeend',`<div class="empty"><div class="big">🔍</div><b>לא נמצאו הרצאות עבור “${esc(state.q)}”.</b><p>יש להקליד את שם המרצה באנגלית (אפשר חלק מהשם).</p></div>`);return;}
   const grid=document.createElement('div');grid.className='grid';
   res.forEach(({s,tk})=>{
     const sel=state.sel.has(s.id);
